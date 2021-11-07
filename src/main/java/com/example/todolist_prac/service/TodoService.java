@@ -2,16 +2,13 @@ package com.example.todolist_prac.service;
 
 import com.example.todolist_prac.model.TodoEntity;
 import com.example.todolist_prac.model.TodoRequest;
-import com.example.todolist_prac.model.TodoResponse;
 import com.example.todolist_prac.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,13 +19,24 @@ public class TodoService {
     // 추가
     public TodoEntity add(TodoRequest todoRequest) {
 
-        TodoEntity todoEntity = new TodoEntity();
-        todoEntity.setTitle(todoRequest.getTitle());
-        todoEntity.setOrder(todoRequest.getOrder());
-        todoEntity.setCompleted(todoRequest.getCompleted());
+        TodoEntity todoEntity = getTodoEntity(todoRequest);
 
         return todoRepository.save(todoEntity);
     }
+
+    // add method refactoring
+    private TodoEntity getTodoEntity(TodoRequest todoRequest) {
+
+        return TodoEntity.builder()
+                .title(todoRequest.getTitle())
+                .order(todoRequest.getOrder())
+                .completed(todoRequest.getCompleted())
+                .build();
+    }
+
+
+
+
 
     // 조회
     public TodoEntity searchById(Long id) {

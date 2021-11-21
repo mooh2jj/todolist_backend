@@ -65,11 +65,18 @@ public class TodoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<TodoResponse> update(@PathVariable Long id, @RequestBody TodoRequest request) {
+    public ResponseEntity<TodoResponse> update(@PathVariable Long id) {
         log.info("Update");
-        TodoEntity result = this.service.updateById(id, request);
+        TodoEntity result = this.service.updateById(id);
         return ResponseEntity.ok(new TodoResponse(result));
     }
+
+//    @PutMapping("{id}")
+//    public ResponseEntity<TodoResponse> update(@PathVariable Long id, @RequestBody TodoRequest request) {
+//        log.info("Update");
+//        TodoEntity result = this.service.updateById(id, request);
+//        return ResponseEntity.ok(new TodoResponse(result));
+//    }
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteOne(@PathVariable Long id) {

@@ -54,7 +54,14 @@ public class TodoService {
         return all;
     }
 
-    // update
+    // update1
+    public TodoEntity updateById(Long id) {
+        TodoEntity todoEntity = this.searchById(id);
+        todoEntity.setCompleted(true);
+        return todoRepository.save(todoEntity);
+    }
+
+    // update2
     public TodoEntity updateById(Long id, TodoRequest request) {
         TodoEntity todoEntity = this.searchById(id);
         if (request.getTitle() != null) {

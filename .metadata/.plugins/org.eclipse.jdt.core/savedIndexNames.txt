@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+I:\JavaStudy\JavaWebDevelement\SpringBoot\todolist_prac\.metadata\.plugins\org.eclipse.jdt.core
+2473621424.index
+2597801175.index
+399784582.index

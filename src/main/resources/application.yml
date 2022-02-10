@@ -11,9 +11,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/todolist
-    username: todolist
-    password: todolist
+    url: jdbc:mysql://localhost:3306/todolist_db?useSSL=false&serverTimezone=Asia/Seoul
+    username: root
+    password: ''
 
 
   jpa:

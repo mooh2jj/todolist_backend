@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Table(name = "Todo")
-public class TodoEntity {
+public class TodoEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +29,5 @@ public class TodoEntity {
     @Column(nullable = false)
     private Boolean completed;
 
-//    private LocalDateTime createAt;
-//
-//    private LocalDateTime updatedAt;
 
 }

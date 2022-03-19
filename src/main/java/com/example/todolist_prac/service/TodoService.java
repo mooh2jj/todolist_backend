@@ -80,11 +80,11 @@ public class TodoService {
 
     // update1
     public TodoResponse updateById(Long id) {
-        var byId = todoRepository.findById(id)
+        var todoEntity = todoRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        byId.setCompleted(true);
+        todoEntity.setCompleted(true);
 
-        return mapToDto(byId);
+        return mapToDto(todoRepository.save(todoEntity));
     }
 
     // update2

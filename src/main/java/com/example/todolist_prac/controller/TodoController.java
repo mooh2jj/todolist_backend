@@ -7,6 +7,7 @@ import com.example.todolist_prac.service.TodoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-@CrossOrigin
+//@CrossOrigin
 @AllArgsConstructor
 @RestController
 @RequestMapping("/todo")
@@ -40,9 +41,9 @@ public class TodoController {
             request.setCompleted(false);
         }
 
-        TodoEntity result = this.service.add(request);
+        TodoResponse todoResponse = this.service.add(request);
 
-        return ResponseEntity.ok(new TodoResponse(result));
+        return new ResponseEntity<>(todoResponse, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")

@@ -69,7 +69,6 @@ public class TodoService {
 
 
     // 전체 조회
-
     public List<TodoResponse> searchAll() {
         var all = todoRepository.findAll();
 
@@ -106,13 +105,11 @@ public class TodoService {
     }
 
     // 삭제
-
     public void deleteById(Long id) {
         todoRepository.deleteById(id);
     }
 
     // 전체 삭제
-
     public void deleteAll() {
         todoRepository.deleteAll();
     }

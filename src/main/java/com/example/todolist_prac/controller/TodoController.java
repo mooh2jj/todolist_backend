@@ -65,14 +65,14 @@ public class TodoController {
     public ResponseEntity<TodoResponse> update(@PathVariable Long id) {
         log.info("Update");
         TodoResponse todoResponse = this.service.updateById(id);
-        return ResponseEntity.ok(todoResponse);
+        return new ResponseEntity<>(todoResponse, HttpStatus.OK);
     }
 
 /*    @PutMapping("{id}")
     public ResponseEntity<TodoResponse> update2(@PathVariable Long id, @RequestBody TodoRequest request) {
         log.info("Update2");
         TodoResponse todoResponse = this.service.updateById(id, request);
-        return ResponseEntity.ok(todoResponse);
+        return new ResponseEntity<>(todoResponse, HttpStatus.OK);
     }*/
 
     @DeleteMapping("{id}")

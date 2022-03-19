@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -60,10 +61,13 @@ public class TodoService {
 
     // 전체 조회
 
-    public List<TodoEntity> searchAll() {
+    public List<TodoResponse> searchAll() {
         var all = todoRepository.findAll();
 
-        return all;
+        return all.stream()
+                .map(TodoEntity -> mapToDto(TodoEntity))
+                .collect(Collectors.toList());
+
     }
 
     // update1

@@ -55,14 +55,9 @@ public class TodoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TodoResponse>> readAll() {
+    public List<TodoResponse> readAll() {
         log.info("Read All");
-        List<TodoEntity> list = this.service.searchAll();
-        List<TodoResponse> responses = list.stream()
-                .map(TodoResponse::new)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(responses);
+        return this.service.searchAll();
     }
 
     @PutMapping("{id}")

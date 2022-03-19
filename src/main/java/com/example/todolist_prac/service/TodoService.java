@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,12 +51,20 @@ public class TodoService {
                 .build();
     }
 
+    private TodoEntity mapToEntity(TodoResponse todoResponse) {
+
+        return TodoEntity.builder()
+                .title(todoResponse.getTitle())
+                .order(todoResponse.getOrder())
+                .completed(todoResponse.getCompleted())
+                .build();
+    }
 
     // 조회
-    public TodoEntity searchById(Long id) {
+    public TodoResponse searchById(Long id) {
         var byId = todoRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return byId;
+        return mapToDto(byId);
     }
 
 
@@ -71,15 +80,18 @@ public class TodoService {
     }
 
     // update1
-    public TodoEntity updateById(Long id) {
-        TodoEntity todoEntity = this.searchById(id);
-        todoEntity.setCompleted(true);
-        return todoRepository.save(todoEntity);
+    public TodoResponse updateById(Long id) {
+        var byId = todoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        byId.setCompleted(true);
+
+        return mapToDto(byId);
     }
 
     // update2
-    public TodoEntity updateById(Long id, TodoRequest request) {
-        TodoEntity todoEntity = this.searchById(id);
+    public TodoResponse updateById(Long id, TodoRequest request) {
+        var todoEntity = todoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         if (request.getTitle() != null) {
             todoEntity.setTitle(request.getTitle());
         }
@@ -90,7 +102,7 @@ public class TodoService {
             todoEntity.setCompleted(request.getCompleted());
         }
 
-        return todoRepository.save(todoEntity);
+        return mapToDto(todoRepository.save(todoEntity));
     }
 
     // 삭제

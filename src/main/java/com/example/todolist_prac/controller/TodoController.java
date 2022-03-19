@@ -49,9 +49,10 @@ public class TodoController {
     @GetMapping("{id}")
     public ResponseEntity<TodoResponse> readOne(@PathVariable Long id) {
         log.info("Read One");
-        TodoEntity result = this.service.searchById(id);
+        TodoResponse todoResponse = this.service.searchById(id);
 
-        return ResponseEntity.ok(new TodoResponse(result));
+//        return new ResponseEntity<>(todoResponse, HttpStatus.OK);
+        return ResponseEntity.ok(todoResponse);
     }
 
     @GetMapping
@@ -63,16 +64,16 @@ public class TodoController {
     @PutMapping("{id}")
     public ResponseEntity<TodoResponse> update(@PathVariable Long id) {
         log.info("Update");
-        TodoEntity result = this.service.updateById(id);
-        return ResponseEntity.ok(new TodoResponse(result));
+        TodoResponse todoResponse = this.service.updateById(id);
+        return ResponseEntity.ok(todoResponse);
     }
 
-//    @PutMapping("{id}")
-//    public ResponseEntity<TodoResponse> update(@PathVariable Long id, @RequestBody TodoRequest request) {
-//        log.info("Update");
-//        TodoEntity result = this.service.updateById(id, request);
-//        return ResponseEntity.ok(new TodoResponse(result));
-//    }
+/*    @PutMapping("{id}")
+    public ResponseEntity<TodoResponse> update2(@PathVariable Long id, @RequestBody TodoRequest request) {
+        log.info("Update2");
+        TodoResponse todoResponse = this.service.updateById(id, request);
+        return ResponseEntity.ok(todoResponse);
+    }*/
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteOne(@PathVariable Long id) {

@@ -19,11 +19,4 @@ public class TodoResponse {
 
     private Boolean completed;
 
-    public TodoResponse(TodoEntity todoEntity) {
-        this.id = todoEntity.getId();
-        this.title = todoEntity.getTitle();
-        this.order = todoEntity.getOrder();
-        this.completed = todoEntity.getCompleted();
-
-    }
 }

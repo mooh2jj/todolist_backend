@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 public class TodoServiceTest {
 
     @InjectMocks
-    private TodoService todoService;
+    private TodoServiceImpl todoService;
 
     @Mock
     private TodoRepository todoRepository;

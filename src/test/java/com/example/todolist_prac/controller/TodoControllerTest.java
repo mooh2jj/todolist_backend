@@ -2,7 +2,7 @@ package com.example.todolist_prac.controller;
 
 import com.example.todolist_prac.model.TodoEntity;
 import com.example.todolist_prac.model.TodoRequest;
-import com.example.todolist_prac.service.TodoService;
+import com.example.todolist_prac.service.TodoServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -36,7 +35,7 @@ public class TodoControllerTest {
     MockMvc mvc;
 
     @MockBean
-    private TodoService todoService;
+    private TodoServiceImpl todoService;
 
     private TodoEntity expected;
 

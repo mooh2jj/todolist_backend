@@ -1,5 +1,6 @@
 package com.example.todolist_prac.controller;
 
+import com.example.todolist_prac.model.PageResponse;
 import com.example.todolist_prac.model.TodoRequest;
 import com.example.todolist_prac.model.TodoResponse;
 import com.example.todolist_prac.service.TodoService;
@@ -54,10 +55,20 @@ public class TodoController {
         return ResponseEntity.ok(todoResponse);
     }
 
-    @GetMapping
+/*    @GetMapping
     public List<TodoResponse> readAll() {
         log.info("Read All");
         return todoService.searchAll();
+    }*/
+
+    // Paging test
+    @GetMapping
+    public PageResponse readAllPaging(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "3", required = false) int pageSize
+    ) {
+        log.info("Read Paging All");
+        return todoService.searchAllPaging(pageNo, pageSize);
     }
 
     @PutMapping("{id}")

@@ -1,5 +1,6 @@
 package com.example.todolist_prac.service;
 
+import com.example.todolist_prac.model.PageResponse;
 import com.example.todolist_prac.model.TodoRequest;
 import com.example.todolist_prac.model.TodoResponse;
 
@@ -27,4 +28,6 @@ public interface TodoService {
 
     // 전체 삭제
     void deleteAll();
+
+    PageResponse searchAllPaging(int pageNo, int pageSize);
 }

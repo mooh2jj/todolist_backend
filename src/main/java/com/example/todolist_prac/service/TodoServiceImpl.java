@@ -1,10 +1,14 @@
 package com.example.todolist_prac.service;
 
+import com.example.todolist_prac.model.PageResponse;
 import com.example.todolist_prac.model.TodoEntity;
 import com.example.todolist_prac.model.TodoRequest;
 import com.example.todolist_prac.model.TodoResponse;
 import com.example.todolist_prac.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -70,6 +74,26 @@ public class TodoServiceImpl implements TodoService{
 
     }
 
+    @Override
+    public PageResponse searchAllPaging(int pageNo, int pageSize) {
+
+        // create Pageable instance
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<TodoEntity> todoEntityPage = todoRepository.findAll(pageable);
+
+        // get content for page object
+        List<TodoEntity> content = todoEntityPage.getContent();
+
+        List<TodoResponse> todoResponses = content.stream().map(TodoEntity -> mapToDto(TodoEntity)).collect(Collectors.toList());
+
+        PageResponse pageResponse = new PageResponse();
+        pageResponse.setContent(todoResponses);
+        pageResponse.setPageNo(pageNo);
+        pageResponse.setPageSize(pageSize);
+
+        return pageResponse;
+    }
+
 
     @Override
     public TodoResponse updateById(Long id) {
@@ -109,5 +133,7 @@ public class TodoServiceImpl implements TodoService{
     public void deleteAll() {
         todoRepository.deleteAll();
     }
+
+
 
 }

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -75,23 +76,26 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
-    public PageResponse searchAllPaging(int pageNo, int pageSize) {
+    public PageResponse searchAllPaging(int pageNo, int pageSize, String sortBy) {
 
         // create Pageable instance
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
-        Page<TodoEntity> todoEntityPage = todoRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        Page<TodoEntity> todoPage = todoRepository.findAll(pageable);
 
         // get content for page object
-        List<TodoEntity> content = todoEntityPage.getContent();
+        List<TodoEntity> listTodos = todoPage.getContent();
 
-        List<TodoResponse> todoResponses = content.stream().map(TodoEntity -> mapToDto(TodoEntity)).collect(Collectors.toList());
+        List<TodoResponse> content = listTodos.stream().map(TodoEntity -> mapToDto(TodoEntity)).collect(Collectors.toList());
 
-        PageResponse pageResponse = new PageResponse();
-        pageResponse.setContent(todoResponses);
-        pageResponse.setPageNo(pageNo);
-        pageResponse.setPageSize(pageSize);
+        return PageResponse.builder()
+                .content(content)
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .totalElements(todoPage.getTotalElements())
+                .totalPages(todoPage.getTotalPages())
+                .last(todoPage.isLast())
+                .build();
 
-        return pageResponse;
     }
 
 

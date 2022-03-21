@@ -65,10 +65,11 @@ public class TodoController {
     @GetMapping
     public PageResponse readAllPaging(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "3", required = false) int pageSize
+            @RequestParam(value = "pageSize", defaultValue = "3", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy
     ) {
         log.info("Read Paging All");
-        return todoService.searchAllPaging(pageNo, pageSize);
+        return todoService.searchAllPaging(pageNo, pageSize, sortBy);
     }
 
     @PutMapping("{id}")

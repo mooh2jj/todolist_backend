@@ -29,5 +29,5 @@ public interface TodoService {
     // 전체 삭제
     void deleteAll();
 
-    PageResponse searchAllPaging(int pageNo, int pageSize);
+    PageResponse searchAllPaging(int pageNo, int pageSize, String sortBy);
 }

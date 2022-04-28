@@ -82,7 +82,6 @@ public class TodoServiceTest {
 
         log.info("response: {}", response);
 
-//        assertEquals(response.getId(), 1L);
 //        assertEquals(response.getOrder(), 0L);
 //        assertFalse(response.getCompleted());
 //        assertEquals(response.getTitle(), "testTodo");
@@ -139,7 +138,22 @@ public class TodoServiceTest {
     }
 
     @Test
-    public void updateById(){
+    public void updateById1(){
+        // given - precondition or setup
+        given(todoRepository.findById(anyLong()))
+                .willReturn(Optional.of(todoEntity));
+        given(todoRepository.save(todoEntity)).willReturn(todoEntity);      // updateById면 두 상황 모두 만들어져야돼!
+
+        // when - action or the behaviour that we are going test
+        TodoResponse todoResponse = todoService.updateById(todoEntity.getId());
+        log.info("todoResponses: {}", todoResponse);
+        // then - verify the output
+        assertThat(todoResponse.getCompleted()).isTrue();
+
+    }
+
+    @Test
+    public void updateById2(){
         // given - precondition or setup
         given(todoRepository.findById(anyLong()))
                 .willReturn(Optional.of(todoEntity));

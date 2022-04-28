@@ -1,6 +1,9 @@
 package com.example.todolist_prac.repository;
 
 import com.example.todolist_prac.model.TodoEntity;
+import com.example.todolist_prac.model.TodoResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,18 +16,29 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
+import static org.assertj.core.api.Assertions.*;
+
+@Slf4j
 @SpringBootTest
+@Transactional
 class TodoRepositoryTest {
 
     @Autowired
     TodoRepository todoRepository;
 
+    TodoEntity todoEntity;
+
     @BeforeEach
-//    @Test
-    public void beforeEach() {
-        System.out.println("test start");
+    public void setup() {
+        todoEntity = TodoEntity.builder()
+                .title("testTodo")
+                .order(0L)
+                .completed(false)
+                .build();
     }
 
 /*    @AfterEach
@@ -32,27 +46,62 @@ class TodoRepositoryTest {
         todoRepository.deleteAll();
     }*/
 
-    @DisplayName("add 테스트")
+    @DisplayName("save 테스트")
+    @Test
+    public void save(){
+        // given - precondition or setup
+        // when - action or the behaviour that we are going test
+        TodoEntity savedTodo = todoRepository.save(todoEntity);
+
+        // then - verify the output
+        assertThat(savedTodo).isNotNull();
+        assertThat(savedTodo.getId()).isGreaterThan(0);
+        assertThat(savedTodo.getTitle()).isEqualTo("testTodo");
+
+    }
+
+
+    @DisplayName("add 20개 등록 테스트")
     @Test
     public void addTest() {
 
         IntStream.rangeClosed(1,20).forEach(i -> {
             TodoEntity todoEntity = TodoEntity.builder()
                     .title("todo_dsg" + i)
-                    .order(Long.valueOf(Integer.valueOf(i)))
+                    .order((long) i)
                     .completed(true)
                     .build();
             todoRepository.save(todoEntity);
         });
-
     }
 
-    @DisplayName("getOne 테스트")
-    @Transactional
+    @DisplayName("getAll 테스트")
     @Test
-    public void getOne() {
-        var todoEntity = todoRepository.getOne(1L);
-        System.out.println("todoEntity(getOne): "+ todoEntity);
+    public void getAll() {
+
+        TodoEntity todoEntity1 = TodoEntity.builder()
+                .title("testTodo1")
+                .order(1L)
+                .completed(false)
+                .build();
+
+        todoRepository.save(todoEntity);
+        todoRepository.save(todoEntity1);
+
+        List<TodoEntity> all = todoRepository.findAll();
+        log.info("todoEntity(all): {}", all);
+
+        assertThat(all).isNotNull();
+//        assertThat(all.size()).isEqualTo(2);      // DB H2일시 true, 실제 DB이면 오류 날 수 있어!
+    }
+
+    @DisplayName("getById 테스트")
+    @Test
+    public void getById() {
+        TodoEntity todoEntity = todoRepository.getById(1L);
+        log.info("todoEntity(getOne): {}", todoEntity);
+
+        assertThat(todoEntity).isNotNull();
     }
 
     @DisplayName("update 테스트")
@@ -64,7 +113,22 @@ class TodoRepositoryTest {
                 .order(19L)
                 .completed(true)
                 .build();
-        System.out.println(todoRepository.save(todoEntity));
+        log.info("todoEntity: {}", todoRepository.save(todoEntity));
+
+        assertThat(todoEntity.getTitle()).isEqualTo("updatedTitle");
+    }
+
+    @DisplayName("delete 테스트")
+    @Test
+    public void deleteById(){
+        // given - precondition or setup
+        TodoEntity savedTodoEntity = todoRepository.save(this.todoEntity);
+        // when - action or the behaviour that we are going test
+        todoRepository.deleteById(savedTodoEntity.getId());
+        Optional<TodoEntity> deletedTodo = todoRepository.findById(savedTodoEntity.getId());
+
+        // then - verify the output
+        assertThat(deletedTodo).isEmpty();
 
     }
 
@@ -75,7 +139,7 @@ class TodoRepositoryTest {
         Pageable pageable = PageRequest.of(0, 10);
 
         Page<TodoEntity> result = todoRepository.findAll(pageable);
-        System.out.println("result: "+ result);
+        log.info("result: {}", result);
     }
 
     @DisplayName("정렬하기 테스트")
@@ -95,14 +159,15 @@ class TodoRepositoryTest {
     @Test
     public void byIdTest() {
         var todoEntity = todoRepository.findById(10L);
-        System.out.println("todoEntity: "+ todoEntity.orElse(null));
+        log.info("todoEntity: {}", todoEntity.orElse(null));
     }
 
     @DisplayName("Arrays.asList로 list 찾기 테스트")
     @Test
     public void listTest() {
-        var todoEntities = todoRepository.findAllById(Arrays.asList(1L, 2L, 3L));
-        todoEntities.forEach(System.out::println);
+
+        List<TodoEntity> allById = todoRepository.findAllById(Arrays.asList(1L, 2L, 3L));
+        allById.forEach(System.out::println);
 
     }
 

@@ -2,6 +2,7 @@ package com.example.todolist_prac.controller;
 
 import com.example.todolist_prac.model.TodoEntity;
 import com.example.todolist_prac.model.TodoRequest;
+import com.example.todolist_prac.model.TodoResponse;
 import com.example.todolist_prac.service.TodoServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
@@ -79,7 +80,15 @@ public class TodoControllerTest {
 
     @Test
     void readOne() throws Exception {
-        given(todoService.searchById(123L)).willReturn(expected);
+
+        TodoResponse todoResponse = TodoResponse.builder()
+                .id(expected.getId())
+                .title(expected.getTitle())
+                .order(expected.getOrder())
+                .completed(expected.getCompleted())
+                .build();
+
+        given(todoService.searchById(123L)).willReturn(todoResponse);
 
         mvc.perform(get("/123"))
                 .andExpect(status().isOk())
@@ -100,10 +109,10 @@ public class TodoControllerTest {
 
     @Test
     void readAll() throws Exception {
-        List<TodoEntity> mockList = new ArrayList<>();
+        List<TodoResponse> mockList = new ArrayList<>();
         int expectedLength = 10;
         for (int i = 0; i < expectedLength; i++) {
-            mockList.add(mock(TodoEntity.class));
+            mockList.add(mock(TodoResponse.class));
         }
 
         given(todoService.searchAll()).willReturn(mockList);

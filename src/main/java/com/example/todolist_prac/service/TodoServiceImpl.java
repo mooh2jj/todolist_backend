@@ -29,11 +29,9 @@ public class TodoServiceImpl implements TodoService{
 
         TodoEntity todoEntity = mapToEntity(todoRequest);
 
-        todoRepository.save(todoEntity);
+        TodoEntity savedTodo = todoRepository.save(todoEntity);
 
-        TodoResponse todoResponse = mapToDto(todoEntity);
-
-        return todoResponse;
+        return mapToDto(savedTodo);
     }
 
     private TodoResponse mapToDto(TodoEntity todoEntity) {

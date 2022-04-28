@@ -55,14 +55,14 @@ public class TodoController {
         return ResponseEntity.ok(todoResponse);
     }
 
-/*    @GetMapping
+    @GetMapping
     public List<TodoResponse> readAll() {
         log.info("Read All");
         return todoService.searchAll();
-    }*/
+    }
 
     // Paging test
-    @GetMapping
+    @GetMapping("/page")
     public PageResponse readAllPaging(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "3", required = false) int pageSize,

@@ -52,10 +52,6 @@ public class TodoControllerTest {
         this.expected.setCompleted(false);
     }
 
-    @AfterEach
-    void afterEach() {
-        todoService.deleteAll();
-    }
 
     @Test
     void create() throws Exception {

@@ -6,7 +6,6 @@ import com.example.todolist_prac.model.TodoResponse;
 import com.example.todolist_prac.service.TodoServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +18,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -55,16 +54,29 @@ public class TodoControllerTest {
 
     @Test
     void create() throws Exception {
-        when(this.todoService.add(any(TodoRequest.class)))
-                .then((i) -> {
-                    TodoRequest request = i.getArgument(0, TodoRequest.class);
-                    return new TodoResponse(this.expected.getId(), request.getTitle(), request.getOrder(), request.getCompleted());
-                });
 
-        TodoRequest request = new TodoRequest();
-        request.setTitle(this.expected.getTitle());
+//        when(this.todoService.add(any(TodoRequest.class)))
+//                .then((i) -> {
+//                    TodoRequest request = i.getArgument(0, TodoRequest.class);
+//                    return new TodoResponse(this.expected.getId(), request.getTitle(), request.getOrder(), request.getCompleted());
+//                });
 
-        String content = mapper.writeValueAsString(request);
+        TodoRequest todoRequest = TodoRequest.builder()
+                .title(expected.getTitle())
+                .order(expected.getOrder())
+                .completed(expected.getCompleted())
+                .build();
+
+        TodoResponse todoResponse = TodoResponse.builder()
+                .id(expected.getId())
+                .title(todoRequest.getTitle())
+                .order(todoRequest.getOrder())
+                .completed(todoRequest.getCompleted())
+                .build();
+
+        given(todoService.add(todoRequest)).willReturn(todoResponse);
+
+        String content = mapper.writeValueAsString(todoRequest);
 
         mvc.perform(post("/todo")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -75,6 +87,9 @@ public class TodoControllerTest {
                 .andExpect(jsonPath("$.order").value(expected.getOrder()))
                 .andExpect(jsonPath("$.completed").value(expected.getCompleted()))
                 .andDo(print());
+
+        verify(todoService).add(todoRequest);
+
     }
 
     @Test
@@ -110,16 +125,17 @@ public class TodoControllerTest {
     void readAll() throws Exception {
         int expectedLength = 10;
         List<TodoResponse> mockList = new ArrayList<>();
-
-        TodoResponse todoResponse = TodoResponse.builder()
-                .title(expected.getTitle())
-                .order(expected.getOrder())
-                .completed(expected.getCompleted())
-                .build();
-
-        for (int i = 0; i < expectedLength; i++) {
+//        for (int i = 0; i < expectedLength; i++) {
+//            mockList.add(todoResponse);
+//        }
+        IntStream.rangeClosed(1,expectedLength).forEach(i -> {
+            TodoResponse todoResponse = TodoResponse.builder()
+                    .title(expected.getTitle()+" "+i)
+                    .order(expected.getOrder())
+                    .completed(expected.getCompleted())
+                    .build();
             mockList.add(todoResponse);
-        }
+        });
 
         given(todoService.searchAll()).willReturn(mockList);
 

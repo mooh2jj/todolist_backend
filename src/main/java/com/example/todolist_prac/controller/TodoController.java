@@ -29,18 +29,6 @@ public class TodoController {
     public ResponseEntity<TodoResponse> create(@RequestBody TodoRequest request) {
         log.info("Create");
 
-        if (ObjectUtils.isEmpty(request.getTitle())) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        if (ObjectUtils.isEmpty(request.getOrder())) {
-            request.setOrder(0L);
-        }
-
-        if (ObjectUtils.isEmpty(request.getCompleted())) {
-            request.setCompleted(false);
-        }
-
         TodoResponse todoResponse = todoService.add(request);
 
         return new ResponseEntity<>(todoResponse, HttpStatus.CREATED);

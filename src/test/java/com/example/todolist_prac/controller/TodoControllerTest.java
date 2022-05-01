@@ -1,5 +1,7 @@
 package com.example.todolist_prac.controller;
 
+import com.example.todolist_prac.exception.ErrorCode;
+import com.example.todolist_prac.exception.ResourceNotFoundException;
 import com.example.todolist_prac.model.TodoEntity;
 import com.example.todolist_prac.model.TodoRequest;
 import com.example.todolist_prac.model.TodoResponse;
@@ -11,10 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +115,7 @@ public class TodoControllerTest {
 
     @Test
     void readOneException() throws Exception {
-        given(todoService.searchById(123L)).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
+        given(todoService.searchById(123L)).willThrow(new ResourceNotFoundException(ErrorCode.NO_TARGET));
 
         mvc.perform(get("/todo/{id}", 123L))
                 .andExpect(status().isNotFound());

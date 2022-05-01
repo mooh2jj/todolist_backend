@@ -1,5 +1,7 @@
 package com.example.todolist_prac.service;
 
+import com.example.todolist_prac.exception.ErrorCode;
+import com.example.todolist_prac.exception.ResourceNotFoundException;
 import com.example.todolist_prac.model.PageResponse;
 import com.example.todolist_prac.model.TodoEntity;
 import com.example.todolist_prac.model.TodoRequest;
@@ -10,9 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,7 +58,7 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public TodoResponse searchById(Long id) {
         var byId = todoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.NO_TARGET));
         return mapToDto(byId);
     }
 
@@ -68,7 +68,7 @@ public class TodoServiceImpl implements TodoService{
         var all = todoRepository.findAll();
 
         return all.stream()
-                .map(TodoEntity -> mapToDto(TodoEntity))
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
 
     }
@@ -83,7 +83,7 @@ public class TodoServiceImpl implements TodoService{
         // get content for page object
         List<TodoEntity> listTodos = todoPage.getContent();
 
-        List<TodoResponse> content = listTodos.stream().map(TodoEntity -> mapToDto(TodoEntity)).collect(Collectors.toList());
+        List<TodoResponse> content = listTodos.stream().map(this::mapToDto).collect(Collectors.toList());
 
         return PageResponse.builder()
                 .content(content)
@@ -100,7 +100,7 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public TodoResponse updateById(Long id) {
         var todoEntity = todoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.NO_TARGET));
         todoEntity.setCompleted(true);
 
         return mapToDto(todoRepository.save(todoEntity));
@@ -110,7 +110,7 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public TodoResponse updateById(Long id, TodoRequest request) {
         var todoEntity = todoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.NO_TARGET));
         if (request.getTitle() != null) {
             todoEntity.setTitle(request.getTitle());
         }

@@ -32,13 +32,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TodoControllerTest {
 
     @Autowired
-    MockMvc mvc;
+    private MockMvc mvc;
 
     @MockBean
     private TodoServiceImpl todoService;
 
     @Autowired
-    ObjectMapper mapper;
+    private ObjectMapper mapper;
 
     private TodoEntity expected;
 

@@ -1,15 +1,15 @@
 package com.example.todolist_prac.model;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Table(name = "Todo")
 public class TodoEntity extends BaseTimeEntity {
 
@@ -26,5 +26,11 @@ public class TodoEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean completed;
 
-
+    @Builder
+    public TodoEntity(Long id, String title, Long order, Boolean completed) {
+        this.id = id;
+        this.title = title;
+        this.order = order;
+        this.completed = completed;
+    }
 }

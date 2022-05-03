@@ -1,14 +1,11 @@
 package com.example.todolist_prac.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class TodoResponse {
 
     private Long id;
@@ -19,4 +16,11 @@ public class TodoResponse {
 
     private Boolean completed;
 
+    @Builder
+    public TodoResponse(Long id, String title, Long order, Boolean completed) {
+        this.id = id;
+        this.title = title;
+        this.order = order;
+        this.completed = completed;
+    }
 }

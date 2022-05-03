@@ -1,6 +1,5 @@
 package com.example.todolist_prac.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +9,6 @@ import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class TodoRequest {
 
     @NotEmpty
@@ -22,6 +19,11 @@ public class TodoRequest {
 
     private Boolean completed;
 
-
+    @Builder
+    public TodoRequest(String title, Long order, Boolean completed) {
+        this.title = title;
+        this.order = order;
+        this.completed = completed;
+    }
 }
 

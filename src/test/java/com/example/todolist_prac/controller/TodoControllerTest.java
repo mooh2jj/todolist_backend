@@ -44,11 +44,12 @@ public class TodoControllerTest {
 
     @BeforeEach
     void setup() {
-        this.expected = new TodoEntity();
-        this.expected.setId(123L);
-        this.expected.setTitle("test");
-        this.expected.setOrder(0L);
-        this.expected.setCompleted(false);
+        expected = TodoEntity.builder()
+                .id(123L)
+                .title("test")
+                .order(0L)
+                .completed(false)
+                .build();
     }
 
 

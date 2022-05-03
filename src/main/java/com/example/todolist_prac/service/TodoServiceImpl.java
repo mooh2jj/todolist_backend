@@ -99,9 +99,9 @@ public class TodoServiceImpl implements TodoService{
 
     @Override
     public TodoResponse updateById(Long id) {
-        var todoEntity = todoRepository.findById(id)
+        TodoEntity todoEntity = todoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.NO_TARGET));
-        todoEntity.setCompleted(true);
+        todoEntity.changeCompleted(true);
 
         return mapToDto(todoRepository.save(todoEntity));
     }
@@ -111,15 +111,6 @@ public class TodoServiceImpl implements TodoService{
     public TodoResponse updateById(Long id, TodoRequest request) {
         var todoEntity = todoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.NO_TARGET));
-        if (request.getTitle() != null) {
-            todoEntity.setTitle(request.getTitle());
-        }
-        if (request.getOrder() != null) {
-            todoEntity.setOrder(request.getOrder());
-        }
-        if (request.getCompleted() != null) {
-            todoEntity.setCompleted(request.getCompleted());
-        }
 
         return mapToDto(todoRepository.save(todoEntity));
     }

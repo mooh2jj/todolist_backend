@@ -33,4 +33,8 @@ public class TodoEntity extends BaseTimeEntity {
         this.order = order;
         this.completed = completed;
     }
+
+    public void changeCompleted(boolean completed) {
+        this.completed = completed;
+    }
 }

@@ -42,6 +42,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.6.3'
 
+    // batch
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    testImplementation 'org.springframework.batch:spring-batch-test'
+
 }
 
 test {

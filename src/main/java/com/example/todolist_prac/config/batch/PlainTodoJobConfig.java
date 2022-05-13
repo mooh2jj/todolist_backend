@@ -62,7 +62,7 @@ public class PlainTodoJobConfig {
                 .name("todoReader")
                 .repository(todoRepository)
                 .methodName("findBy")
-                .pageSize(5)
+                .pageSize(CHUNK_SIZE)
                 .arguments(List.of())
                 .sorts(Collections.singletonMap("id", Sort.Direction.DESC))
                 .build();

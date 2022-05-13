@@ -1,4 +1,4 @@
-package com.example.todolist_prac.config;
+package com.example.todolist_prac.config.batch;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

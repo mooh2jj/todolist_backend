@@ -167,4 +167,10 @@ class TodoRepositoryTest {
 
     }
 
+    @Test
+    public void findByCompletedFalse() {
+        List<TodoEntity> byCompletedFalse = todoRepository.findByCompletedFalse();
+        byCompletedFalse.forEach(System.out::println);
+    }
+
 }

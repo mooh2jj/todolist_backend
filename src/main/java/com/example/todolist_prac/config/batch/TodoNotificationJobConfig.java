@@ -1,8 +1,7 @@
 package com.example.todolist_prac.config.batch;
 
-import com.example.todolist_prac.adapter.FakeSendService;
 import com.example.todolist_prac.model.TodoEntity;
-import com.example.todolist_prac.model.TodoResponse;
+import com.example.todolist_prac.model.TodoNotificationDto;
 import com.example.todolist_prac.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,10 +45,10 @@ public class TodoNotificationJobConfig {
     @JobScope
     @Bean("todoNotificationStep")
     public Step todoNotificationStep(ItemReader<TodoEntity> todoNotificationReader,
-                         ItemProcessor<TodoEntity, TodoResponse> todoNotificationProcessor,
-                         ItemWriter<TodoResponse> todoNotificationWriter) {
+                         ItemProcessor<TodoEntity, TodoNotificationDto> todoNotificationProcessor,
+                         ItemWriter<TodoNotificationDto> todoNotificationWriter) {
         return stepBuilderFactory.get("todoNotificationStep")
-                .<TodoEntity, TodoResponse>chunk(CHUNK_SIZE)
+                .<TodoEntity, TodoNotificationDto>chunk(CHUNK_SIZE)
                 .reader(todoNotificationReader)
                 .processor(todoNotificationProcessor)
                 .writer(todoNotificationWriter)
@@ -71,13 +70,23 @@ public class TodoNotificationJobConfig {
 
     @StepScope
     @Bean
-    public ItemProcessor<TodoEntity, TodoResponse> todoNotificationProcessor() {
-        return todo -> TodoResponse.builder()
-                .id(todo.getId())
-                .title(todo.getTitle())
-                .order(todo.getOrder())
-                .completed(todo.getCompleted())
-                .build();
+    public ItemProcessor<TodoEntity, TodoNotificationDto> todoNotificationProcessor() {
+        return todo -> {
+
+            List<TodoEntity> todoList = todoRepository.findByCompletedFalse();
+
+            if (todoList.isEmpty()) {
+                return null;
+            }
+
+            return TodoNotificationDto.builder()
+                    .id(todo.getId())
+                    .title(todo.getTitle())
+                    .order(todo.getOrder())
+                    .completed(todo.getCompleted())
+                    .count(todoList.size())
+                    .build();
+        };
     }
 
 
@@ -89,7 +98,7 @@ public class TodoNotificationJobConfig {
 
     @StepScope
     @Bean
-    public ItemWriter<TodoResponse> todoNotificationWriter() {
+    public ItemWriter<TodoNotificationDto> todoNotificationWriter() {
         return items -> {
             items.forEach(System.out::println);
             System.out.println("==== chunk is finished");

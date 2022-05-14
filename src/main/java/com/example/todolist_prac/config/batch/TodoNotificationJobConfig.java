@@ -2,6 +2,7 @@ package com.example.todolist_prac.config.batch;
 
 import com.example.todolist_prac.adapter.FakeSendService;
 import com.example.todolist_prac.model.TodoEntity;
+import com.example.todolist_prac.model.TodoResponse;
 import com.example.todolist_prac.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.RepositoryItemReader;
@@ -44,12 +46,12 @@ public class TodoNotificationJobConfig {
     @JobScope
     @Bean("todoNotificationStep")
     public Step todoNotificationStep(ItemReader<TodoEntity> todoNotificationReader,
-//                         ItemProcessor todoProcessor,
-                         ItemWriter<TodoEntity> todoNotificationWriter) {
+                         ItemProcessor<TodoEntity, TodoResponse> todoNotificationProcessor,
+                         ItemWriter<TodoResponse> todoNotificationWriter) {
         return stepBuilderFactory.get("todoNotificationStep")
-                .<TodoEntity, TodoEntity>chunk(CHUNK_SIZE)
+                .<TodoEntity, TodoResponse>chunk(CHUNK_SIZE)
                 .reader(todoNotificationReader)
-//                .processor(todoProcessor)
+                .processor(todoNotificationProcessor)
                 .writer(todoNotificationWriter)
                 .build();
     }
@@ -67,17 +69,31 @@ public class TodoNotificationJobConfig {
                 .build();
     }
 
-//    @StepScope
-//    @Bean
-//    public ItemProcessor<TodoEntity, String> todoProcessor() {
-//        return item -> "processed " + item.getText();
-//    }
-
-
     @StepScope
+    @Bean
+    public ItemProcessor<TodoEntity, TodoResponse> todoNotificationProcessor() {
+        return todo -> TodoResponse.builder()
+                .id(todo.getId())
+                .title(todo.getTitle())
+                .order(todo.getOrder())
+                .completed(todo.getCompleted())
+                .build();
+    }
+
+
+/*    @StepScope
     @Bean
     public ItemWriter<TodoEntity> todoNotificationWriter(FakeSendService fakeSendService) {
         return items -> items.forEach(item -> fakeSendService.send(item.getTitle(), String.valueOf(item.getCompleted())));
+    }    */
+
+    @StepScope
+    @Bean
+    public ItemWriter<TodoResponse> todoNotificationWriter() {
+        return items -> {
+            items.forEach(System.out::println);
+            System.out.println("==== chunk is finished");
+        };
     }
 
 }

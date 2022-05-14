@@ -16,14 +16,23 @@ public class TodoNotificationDto {
 
     private Boolean completed;
 
-    private int count;
+    private Integer count;
 
     @Builder
-    public TodoNotificationDto(Long id, String title, Long order, Boolean completed, int count) {
+    public TodoNotificationDto(Long id, String title, Long order, Boolean completed, Integer count) {
         this.id = id;
         this.title = title;
         this.order = order;
         this.completed = completed;
         this.count = count;
+    }
+
+    public String toMessage() {
+        return String.format("%s todo 알림\n" +
+                "총 %d todo가 있습니다.\n", "dsg님", count)
+                +
+                String.format("title: %s\n" +
+                        "order: %d\n" +
+                        "completed: %s\n", title, order, completed);
     }
 }

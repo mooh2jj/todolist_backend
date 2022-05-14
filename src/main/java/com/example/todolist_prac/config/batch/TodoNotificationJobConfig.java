@@ -1,5 +1,6 @@
 package com.example.todolist_prac.config.batch;
 
+import com.example.todolist_prac.adapter.FakeSendService;
 import com.example.todolist_prac.model.TodoEntity;
 import com.example.todolist_prac.model.TodoNotificationDto;
 import com.example.todolist_prac.repository.TodoRepository;
@@ -90,19 +91,19 @@ public class TodoNotificationJobConfig {
     }
 
 
-/*    @StepScope
-    @Bean
-    public ItemWriter<TodoEntity> todoNotificationWriter(FakeSendService fakeSendService) {
-        return items -> items.forEach(item -> fakeSendService.send(item.getTitle(), String.valueOf(item.getCompleted())));
-    }    */
-
     @StepScope
     @Bean
-    public ItemWriter<TodoNotificationDto> todoNotificationWriter() {
-        return items -> {
-            items.forEach(System.out::println);
-            System.out.println("==== chunk is finished");
-        };
+    public ItemWriter<TodoNotificationDto> todoNotificationWriter(FakeSendService fakeSendService) {
+        return items -> items.forEach(item -> fakeSendService.send(item.getTitle(), item.toMessage()));
     }
+
+//    @StepScope
+//    @Bean
+//    public ItemWriter<TodoNotificationDto> todoNotificationWriter() {
+//        return items -> {
+//            items.forEach(item -> System.out.println(item.toMessage()));
+//            System.out.println("==== chunk is finished");
+//        };
+//    }
 
 }

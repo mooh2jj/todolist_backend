@@ -11,11 +11,12 @@
 spring:
   batch:
     job:
+      enabled: false
       names: ${job.name:NONE}
     jdbc:
       initialize-schema: never
-  main:
-    web-application-type: none
+#  main:
+#    web-application-type: none
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

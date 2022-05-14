@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.JobScope;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.configuration.annotation.*;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
@@ -36,7 +33,7 @@ public class TodoNotificationJobConfig {
     private static final int CHUNK_SIZE = 4;
 
     @Bean("todoNotificationJob")
-    public Job todoJob(Step todoNotificationStep) {
+    public Job todoNotificationJob(Step todoNotificationStep) {
         return jobBuilderFactory.get("todoNotificationJob")
                 .incrementer(new RunIdIncrementer())
                 .start(todoNotificationStep)
@@ -73,7 +70,7 @@ public class TodoNotificationJobConfig {
     @Bean
     public ItemProcessor<TodoEntity, TodoNotificationDto> todoNotificationProcessor() {
         return todo -> {
-
+            // todo들 아직 compleated 안된 거 count로 표기
             List<TodoEntity> todoList = todoRepository.findByCompletedFalse();
 
             if (todoList.isEmpty()) {

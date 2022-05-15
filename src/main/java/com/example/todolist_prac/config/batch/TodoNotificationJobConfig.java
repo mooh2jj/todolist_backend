@@ -1,6 +1,7 @@
 package com.example.todolist_prac.config.batch;
 
 import com.example.todolist_prac.adapter.FakeSendService;
+import com.example.todolist_prac.components.MailComponents;
 import com.example.todolist_prac.model.TodoEntity;
 import com.example.todolist_prac.model.TodoNotificationDto;
 import com.example.todolist_prac.repository.TodoRepository;
@@ -90,8 +91,11 @@ public class TodoNotificationJobConfig {
 
     @StepScope
     @Bean
-    public ItemWriter<TodoNotificationDto> todoNotificationWriter(FakeSendService fakeSendService) {
-        return items -> items.forEach(item -> fakeSendService.send(item.getTitle(), item.toMessage()));
+    public ItemWriter<TodoNotificationDto> todoNotificationWriter(MailComponents mailService) {
+        return items -> items.forEach(
+                // mailSendService로 대체, todo갯수만큼 보내짐 mail -> dto.getMail로 각자 보내기!
+                item -> mailService.sendMail("ehtjd33@gmail.com", item.getTitle(), item.toMessage())
+        );
     }
 
 //    @StepScope

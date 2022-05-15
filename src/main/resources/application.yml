@@ -38,6 +38,18 @@ spring:
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ehtjd33@gmail.com
+    password: zmgoccjzlfqowudj
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+
+
 logging:
   level:
     org.hibernate.SQL: debug

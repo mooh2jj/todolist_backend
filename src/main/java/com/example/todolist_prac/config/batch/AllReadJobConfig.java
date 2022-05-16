@@ -6,7 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
@@ -37,16 +40,18 @@ public class AllReadJobConfig {
     private static final int CHUNK_SIZE = 4;
     private static final int FETCH_SIZE = 4;
 
-    @Bean
+    @Bean("allReadJob")
     public Job allReadJob(
             Step allReadStep
     ) {
         return jobBuilderFactory.get("allReadJob")
+                .incrementer(new RunIdIncrementer())
                 .start(allReadStep)
                 .build();
     }
 // allReadPagingReader
-    @Bean
+    @JobScope
+    @Bean("allReadStep")
     public Step allReadStep(
             ItemReader<TodoEntity> allReadCursorReader,
             ItemWriter<TodoEntity> allReadWriter
@@ -59,6 +64,7 @@ public class AllReadJobConfig {
                 .build();
     }
 
+    @StepScope
     @Bean
     public JdbcCursorItemReader<TodoEntity> allReadCursorReader() {
         return new JdbcCursorItemReaderBuilder<TodoEntity>()
@@ -71,6 +77,7 @@ public class AllReadJobConfig {
                 .build();
     }
 
+    @StepScope
     @Bean
     public JdbcPagingItemReader<TodoEntity> allReadPagingReader(
             PagingQueryProvider queryProvider) {
@@ -98,6 +105,7 @@ public class AllReadJobConfig {
         return queryProvider.getObject();
     }
 
+    @StepScope
     @Bean
     public ItemWriter<TodoEntity> allReadWriter() {
         return list -> log.info("write items.\n" +

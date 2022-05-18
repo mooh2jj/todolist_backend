@@ -1,30 +1,26 @@
 package com.example.todolist_prac.repository;
 
 import com.example.todolist_prac.model.TodoEntity;
-import com.example.todolist_prac.model.TodoResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-@SpringBootTest
-@Transactional
+@DataJpaTest
 class TodoRepositoryTest {
 
     @Autowired
@@ -35,16 +31,13 @@ class TodoRepositoryTest {
     @BeforeEach
     public void setup() {
         todoEntity = TodoEntity.builder()
+                .id(1L)
                 .title("testTodo")
                 .order(0L)
                 .completed(false)
                 .build();
     }
 
-/*    @AfterEach
-    void afterEach() {
-        todoRepository.deleteAll();
-    }*/
 
     @DisplayName("save 테스트")
     @Test
@@ -55,7 +48,6 @@ class TodoRepositoryTest {
 
         // then - verify the output
         assertThat(savedTodo).isNotNull();
-        assertThat(savedTodo.getId()).isGreaterThan(0);
         assertThat(savedTodo.getTitle()).isEqualTo("testTodo");
 
     }
@@ -122,10 +114,12 @@ class TodoRepositoryTest {
     @Test
     public void deleteById(){
         // given - precondition or setup
-        TodoEntity savedTodoEntity = todoRepository.save(this.todoEntity);
+        TodoEntity savedTodoEntity = todoRepository.save(todoEntity);
+        log.info("savedTodoEntity.getId: {}", savedTodoEntity.getId());
         // when - action or the behaviour that we are going test
-        todoRepository.deleteById(savedTodoEntity.getId());
-        Optional<TodoEntity> deletedTodo = todoRepository.findById(savedTodoEntity.getId());
+        todoRepository.delete(savedTodoEntity);
+//        todoRepository.deleteById(savedTodoEntity.getId());
+        Optional<TodoEntity> deletedTodo = todoRepository.findById(1L);
 
         // then - verify the output
         assertThat(deletedTodo).isEmpty();

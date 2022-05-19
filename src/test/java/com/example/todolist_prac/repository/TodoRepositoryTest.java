@@ -32,6 +32,7 @@ class TodoRepositoryTest {
     public void setup() {
         todoEntity = TodoEntity.builder()
                 .title("testTodo")
+                .id(1L)
                 .order(0L)
                 .completed(false)
                 .build();
@@ -49,9 +50,9 @@ class TodoRepositoryTest {
         // when - action or the behaviour that we are going test
         TodoEntity savedTodo = todoRepository.save(todoEntity);
 
+        log.info("savedTodo: {}", savedTodo);
         // then - verify the output
         assertThat(savedTodo).isNotNull();
-        assertThat(savedTodo.getId()).isGreaterThan(0);
         assertThat(savedTodo.getTitle()).isEqualTo("testTodo");
 
     }
@@ -118,10 +119,12 @@ class TodoRepositoryTest {
     @Test
     public void deleteById(){
         // given - precondition or setup
-        TodoEntity savedTodoEntity = todoRepository.save(this.todoEntity);
+        TodoEntity savedTodoEntity = todoRepository.save(todoEntity);
+        log.info("savedTodoEntity.getId: {}", savedTodoEntity.getId());
         // when - action or the behaviour that we are going test
-        todoRepository.deleteById(savedTodoEntity.getId());
-        Optional<TodoEntity> deletedTodo = todoRepository.findById(savedTodoEntity.getId());
+        todoRepository.delete(savedTodoEntity);
+//        todoRepository.deleteById(savedTodoEntity.getId());
+        Optional<TodoEntity> deletedTodo = todoRepository.findById(1L);
 
         // then - verify the output
         assertThat(deletedTodo).isEmpty();

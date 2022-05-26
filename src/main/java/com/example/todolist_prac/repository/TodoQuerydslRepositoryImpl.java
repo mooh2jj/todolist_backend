@@ -4,17 +4,15 @@ import com.example.todolist_prac.model.QTodoEntity;
 import com.example.todolist_prac.model.TodoEntity;
 import com.example.todolist_prac.model.TodoSearchCondition;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-@Repository
-public class TodoQueryRepository {
+public class TodoQuerydslRepositoryImpl implements CustomTodoRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public TodoQueryRepository(EntityManager em) {
+    public TodoQuerydslRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
 

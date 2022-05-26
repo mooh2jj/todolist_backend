@@ -150,6 +150,7 @@ class TodoRepositoryTest {
         Pageable pageable = PageRequest.of(0, 10, sort);
 
         Page<TodoEntity> result = todoRepository.findAll(pageable);
+        log.info("result: {}", result.getContent());
 
         result.get().forEach(System.out::println);
     }

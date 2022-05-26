@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
+public interface TodoRepository extends JpaRepository<TodoEntity, Long>, CustomTodoRepository {
     Page<TodoEntity> findBy(Pageable pageable);
 
     List<TodoEntity> findByCompletedFalse();

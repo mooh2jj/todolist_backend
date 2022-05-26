@@ -6,7 +6,6 @@ import com.example.todolist_prac.model.PageResponse;
 import com.example.todolist_prac.model.TodoEntity;
 import com.example.todolist_prac.model.TodoRequest;
 import com.example.todolist_prac.model.TodoResponse;
-import com.example.todolist_prac.repository.TodoQueryRepository;
 import com.example.todolist_prac.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,8 +22,6 @@ import java.util.stream.Collectors;
 public class TodoServiceImpl implements TodoService{
 
     public final TodoRepository todoRepository;
-
-    private final TodoQueryRepository todoQueryRepository;
 
 
     @Override
@@ -69,7 +66,7 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public List<TodoResponse> searchAll() {
 //        var all = todoRepository.findAll();
-        List<TodoEntity> all = todoQueryRepository.findAll_querydsl();
+        List<TodoEntity> all = todoRepository.findAll_querydsl();
 
         return all.stream()
                 .map(this::mapToDto)

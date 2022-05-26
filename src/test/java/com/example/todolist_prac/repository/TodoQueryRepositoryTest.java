@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,11 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 @DataJpaTest
 class TodoQueryRepositoryTest {
-
-    @Autowired
-    private EntityManager em;
-    @Autowired
-    private TodoQueryRepository todoQueryRepository;
 
     @Autowired
     private TodoRepository todoRepository;
@@ -44,7 +38,7 @@ class TodoQueryRepositoryTest {
 
         log.info("savedTodo: {}", savedTodo);
         // when - action or the behaviour that we are going test
-        List<TodoEntity> all_querydsl = todoQueryRepository.findAll_querydsl();
+        List<TodoEntity> all_querydsl = todoRepository.findAll_querydsl();
         // then - verify the output
         assertThat(all_querydsl.size()).isEqualTo(1);
 
@@ -61,14 +55,8 @@ class TodoQueryRepositoryTest {
         condition.setTitle("dsg");
         condition.setTodoOrder(1L);
 
-//        return queryFactory
-//                .select(todo)
-//                .from(todo)
-//                .where(todo.title.contains(condition.getTitle()),
-//                        todo.order.loe(condition.getTodoOrder()))
-//                .fetch();
 
-        List<TodoEntity> search = todoQueryRepository.search(condition);
+        List<TodoEntity> search = todoRepository.search(condition);
         // then - verify the output
         log.info("search: {}", search);
 

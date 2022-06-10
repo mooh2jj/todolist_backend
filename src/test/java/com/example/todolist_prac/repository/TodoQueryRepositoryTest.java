@@ -19,6 +19,9 @@ class TodoQueryRepositoryTest {
     @Autowired
     private TodoRepository todoRepository;
 
+    @Autowired
+    private TodoQuerydslRepository todoQuerydslRepository;
+
     private TodoEntity todoEntity;
 
     @BeforeEach
@@ -38,7 +41,7 @@ class TodoQueryRepositoryTest {
 
         log.info("savedTodo: {}", savedTodo);
         // when - action or the behaviour that we are going test
-        List<TodoEntity> all_querydsl = todoRepository.findAll_querydsl();
+        List<TodoEntity> all_querydsl = todoQuerydslRepository.findAll_querydsl();
         // then - verify the output
         assertThat(all_querydsl.size()).isEqualTo(1);
 
@@ -56,7 +59,7 @@ class TodoQueryRepositoryTest {
         condition.setTodoOrder(1L);
 
 
-        List<TodoEntity> search = todoRepository.search(condition);
+        List<TodoEntity> search = todoQuerydslRepository.search(condition);
         // then - verify the output
         log.info("search: {}", search);
 

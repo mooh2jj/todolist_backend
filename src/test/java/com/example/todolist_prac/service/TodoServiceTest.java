@@ -151,6 +151,7 @@ public class TodoServiceTest {
 
     }
 
+    // TODO : 안되고 있음 한번봐줘야 함!
     @Test
     public void updateById2(){
         // given - precondition or setup
@@ -159,7 +160,7 @@ public class TodoServiceTest {
         given(todoRepository.save(todoEntity)).willReturn(todoEntity);      // updateById면 두 상황 모두 만들어져야돼!
 
         TodoRequest request = TodoRequest.builder()
-                .title("kkk")
+                .title("new_test_title")
                 .order(2L)
                 .build();
 

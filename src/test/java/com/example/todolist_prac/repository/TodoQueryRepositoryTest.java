@@ -36,6 +36,7 @@ class TodoQueryRepositoryTest {
 
     @Test
     public void given_when_then1(){
+        // TODO : querydsl load 실패
         // given - precondition or setup
         TodoEntity savedTodo = todoRepository.save(todoEntity);
 
@@ -49,6 +50,7 @@ class TodoQueryRepositoryTest {
 
     @Test
     public void given_when_then(){
+        // TODO : querydsl load 실패
         // given - precondition or setup
         TodoEntity savedTodo = todoRepository.save(todoEntity);
 

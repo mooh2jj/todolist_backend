@@ -11,9 +11,9 @@ public class APIException extends RuntimeException {
 
     private ErrorCode errorCode;
 
-    public APIException(HttpStatus httpStatus, String message) {
-        this.httpStatus = httpStatus;
+    public APIException(String message, HttpStatus httpStatus) {
         this.message = message;
+        this.httpStatus = httpStatus;
     }
 
     public APIException(ErrorCode errorCode) {

@@ -1,8 +1,6 @@
 package com.example.todolist_prac.model.user;
 
-import com.example.todolist_prac.model.BaseTimeEntity;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "roles")
-public class Role extends BaseTimeEntity {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

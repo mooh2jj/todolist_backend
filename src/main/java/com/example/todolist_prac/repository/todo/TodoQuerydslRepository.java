@@ -1,8 +1,8 @@
-package com.example.todolist_prac.repository;
+package com.example.todolist_prac.repository.todo;
 
 import com.example.todolist_prac.model.QTodoEntity;
-import com.example.todolist_prac.model.TodoEntity;
-import com.example.todolist_prac.model.TodoSearchCondition;
+import com.example.todolist_prac.model.todo.TodoEntity;
+import com.example.todolist_prac.dto.todo.TodoSearchCondition;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 

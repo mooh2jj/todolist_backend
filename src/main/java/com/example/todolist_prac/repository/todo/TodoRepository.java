@@ -1,6 +1,6 @@
-package com.example.todolist_prac.repository;
+package com.example.todolist_prac.repository.todo;
 
-import com.example.todolist_prac.model.TodoEntity;
+import com.example.todolist_prac.model.todo.TodoEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

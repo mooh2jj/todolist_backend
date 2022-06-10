@@ -1,8 +1,8 @@
 package com.example.todolist_prac.integration;
 
-import com.example.todolist_prac.model.TodoEntity;
-import com.example.todolist_prac.model.TodoRequest;
-import com.example.todolist_prac.repository.TodoRepository;
+import com.example.todolist_prac.model.todo.TodoEntity;
+import com.example.todolist_prac.dto.todo.TodoRequest;
+import com.example.todolist_prac.repository.todo.TodoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,6 @@
 package com.example.todolist_prac.config.batch;
 
-import com.example.todolist_prac.model.TodoEntity;
+import com.example.todolist_prac.model.todo.TodoEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;

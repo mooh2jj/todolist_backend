@@ -1,5 +1,6 @@
-package com.example.todolist_prac.model;
+package com.example.todolist_prac.dto;
 
+import com.example.todolist_prac.dto.todo.TodoResponse;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;

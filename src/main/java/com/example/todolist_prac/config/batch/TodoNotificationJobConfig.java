@@ -1,10 +1,9 @@
 package com.example.todolist_prac.config.batch;
 
-import com.example.todolist_prac.adapter.FakeSendService;
 import com.example.todolist_prac.components.MailComponents;
-import com.example.todolist_prac.model.TodoEntity;
-import com.example.todolist_prac.model.TodoNotificationDto;
-import com.example.todolist_prac.repository.TodoRepository;
+import com.example.todolist_prac.model.todo.TodoEntity;
+import com.example.todolist_prac.dto.todo.TodoNotificationDto;
+import com.example.todolist_prac.repository.todo.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;

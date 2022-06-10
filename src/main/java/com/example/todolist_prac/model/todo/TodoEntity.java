@@ -1,5 +1,6 @@
-package com.example.todolist_prac.model;
+package com.example.todolist_prac.model.todo;
 
+import com.example.todolist_prac.model.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;

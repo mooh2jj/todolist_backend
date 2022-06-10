@@ -1,6 +1,5 @@
 package com.example.todolist_prac.controller;
 
-import com.example.todolist_prac.model.JobLauncherRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;

@@ -1,13 +1,13 @@
-package com.example.todolist_prac.service;
+package com.example.todolist_prac.service.todo;
 
 import com.example.todolist_prac.exception.ErrorCode;
 import com.example.todolist_prac.exception.ResourceNotFoundException;
-import com.example.todolist_prac.model.PageResponse;
-import com.example.todolist_prac.model.TodoEntity;
-import com.example.todolist_prac.model.TodoRequest;
-import com.example.todolist_prac.model.TodoResponse;
-import com.example.todolist_prac.repository.TodoQuerydslRepository;
-import com.example.todolist_prac.repository.TodoRepository;
+import com.example.todolist_prac.dto.PageResponse;
+import com.example.todolist_prac.model.todo.TodoEntity;
+import com.example.todolist_prac.dto.todo.TodoRequest;
+import com.example.todolist_prac.dto.todo.TodoResponse;
+import com.example.todolist_prac.repository.todo.TodoQuerydslRepository;
+import com.example.todolist_prac.repository.todo.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

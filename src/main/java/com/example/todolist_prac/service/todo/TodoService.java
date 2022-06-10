@@ -1,8 +1,8 @@
-package com.example.todolist_prac.service;
+package com.example.todolist_prac.service.todo;
 
-import com.example.todolist_prac.model.PageResponse;
-import com.example.todolist_prac.model.TodoRequest;
-import com.example.todolist_prac.model.TodoResponse;
+import com.example.todolist_prac.dto.PageResponse;
+import com.example.todolist_prac.dto.todo.TodoRequest;
+import com.example.todolist_prac.dto.todo.TodoResponse;
 
 import java.util.List;
 

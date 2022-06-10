@@ -1,7 +1,7 @@
 package com.example.todolist_prac.config.batch;
 
-import com.example.todolist_prac.model.TodoEntity;
-import com.example.todolist_prac.repository.TodoRepository;
+import com.example.todolist_prac.model.todo.TodoEntity;
+import com.example.todolist_prac.repository.todo.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -11,7 +11,6 @@ import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.RepositoryItemReader;

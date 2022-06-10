@@ -1,10 +1,11 @@
 package com.example.todolist_prac.service;
 
 import com.example.todolist_prac.exception.ResourceNotFoundException;
-import com.example.todolist_prac.model.TodoEntity;
-import com.example.todolist_prac.model.TodoRequest;
-import com.example.todolist_prac.model.TodoResponse;
-import com.example.todolist_prac.repository.TodoRepository;
+import com.example.todolist_prac.model.todo.TodoEntity;
+import com.example.todolist_prac.dto.todo.TodoRequest;
+import com.example.todolist_prac.dto.todo.TodoResponse;
+import com.example.todolist_prac.repository.todo.TodoRepository;
+import com.example.todolist_prac.service.todo.TodoServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

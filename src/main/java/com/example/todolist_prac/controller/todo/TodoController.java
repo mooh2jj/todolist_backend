@@ -1,17 +1,13 @@
-package com.example.todolist_prac.controller;
+package com.example.todolist_prac.controller.todo;
 
-import com.example.todolist_prac.model.PageResponse;
-import com.example.todolist_prac.model.TodoRequest;
-import com.example.todolist_prac.model.TodoResponse;
-import com.example.todolist_prac.service.TodoService;
-import com.example.todolist_prac.service.TodoServiceImpl;
-import lombok.AllArgsConstructor;
+import com.example.todolist_prac.dto.PageResponse;
+import com.example.todolist_prac.dto.todo.TodoRequest;
+import com.example.todolist_prac.dto.todo.TodoResponse;
+import com.example.todolist_prac.service.todo.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

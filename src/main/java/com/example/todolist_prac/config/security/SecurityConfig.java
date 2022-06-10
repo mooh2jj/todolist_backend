@@ -1,5 +1,6 @@
 package com.example.todolist_prac.config.security;
 
+import com.example.todolist_prac.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,7 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final CustomUserDetailsService customUserDetailsService;
+    private final UserService userService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

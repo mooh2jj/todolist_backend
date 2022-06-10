@@ -1,4 +1,4 @@
-package com.example.todolist_prac.model;
+package com.example.todolist_prac.dto.todo;
 
 import lombok.Builder;
 import lombok.Data;

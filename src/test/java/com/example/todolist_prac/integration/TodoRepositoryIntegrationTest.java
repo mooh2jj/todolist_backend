@@ -1,7 +1,7 @@
 package com.example.todolist_prac.integration;
 
-import com.example.todolist_prac.model.TodoEntity;
-import com.example.todolist_prac.repository.TodoRepository;
+import com.example.todolist_prac.model.todo.TodoEntity;
+import com.example.todolist_prac.repository.todo.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

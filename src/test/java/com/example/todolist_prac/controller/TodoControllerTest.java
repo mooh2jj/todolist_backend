@@ -1,11 +1,12 @@
 package com.example.todolist_prac.controller;
 
+import com.example.todolist_prac.controller.todo.TodoController;
 import com.example.todolist_prac.exception.ErrorCode;
 import com.example.todolist_prac.exception.ResourceNotFoundException;
-import com.example.todolist_prac.model.TodoEntity;
-import com.example.todolist_prac.model.TodoRequest;
-import com.example.todolist_prac.model.TodoResponse;
-import com.example.todolist_prac.service.TodoServiceImpl;
+import com.example.todolist_prac.model.todo.TodoEntity;
+import com.example.todolist_prac.dto.todo.TodoRequest;
+import com.example.todolist_prac.dto.todo.TodoResponse;
+import com.example.todolist_prac.service.todo.TodoServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;

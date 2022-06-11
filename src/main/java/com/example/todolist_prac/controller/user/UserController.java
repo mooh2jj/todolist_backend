@@ -1,5 +1,6 @@
 package com.example.todolist_prac.controller.user;
 
+import com.example.todolist_prac.dto.user.LoginDto;
 import com.example.todolist_prac.dto.user.SignUpDto;
 import com.example.todolist_prac.model.user.Role;
 import com.example.todolist_prac.model.user.User;
@@ -9,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +28,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class UserController {
 
+    private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -56,5 +62,18 @@ public class UserController {
 
         return new ResponseEntity<>("User registered successfully!", HttpStatus.OK);
     }
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginDto loginDto) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginDto.getUsernameOrEmail(),
+                        loginDto.getPassword()
+                ));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return new ResponseEntity<>("User signed in successfully!", HttpStatus.OK);
+    }
+
 
 }

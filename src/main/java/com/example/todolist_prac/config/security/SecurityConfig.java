@@ -1,5 +1,7 @@
 package com.example.todolist_prac.config.security;
 
+import com.example.todolist_prac.components.jwt.JwtAuthenticationEntryPoint;
+import com.example.todolist_prac.components.jwt.JwtAuthenticationFilter;
 import com.example.todolist_prac.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -10,8 +12,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -19,6 +23,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
+    }
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -30,12 +40,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf().disable()
+                // jwt
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/todo/**").permitAll()
                 .antMatchers("/users/**").permitAll()
-                .anyRequest().authenticated()   // 그외는 인증을 해야 한다.
-                .and()
-                .httpBasic();
+                .anyRequest().authenticated();   // 그외는 인증을 해야 한다.
+//                .and()
+//                .httpBasic();
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 //        super.configure(http);
     }

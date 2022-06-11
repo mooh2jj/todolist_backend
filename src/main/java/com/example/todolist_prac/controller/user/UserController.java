@@ -1,5 +1,7 @@
 package com.example.todolist_prac.controller.user;
 
+import com.example.todolist_prac.components.jwt.JwtTokenProvider;
+import com.example.todolist_prac.dto.user.JWTAuthResponse;
 import com.example.todolist_prac.dto.user.LoginDto;
 import com.example.todolist_prac.dto.user.SignUpDto;
 import com.example.todolist_prac.model.user.Role;
@@ -32,6 +34,8 @@ public class UserController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
+
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto) {
@@ -65,14 +69,20 @@ public class UserController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginDto loginDto) {
+        // 인증
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginDto.getUsernameOrEmail(),
                         loginDto.getPassword()
                 ));
+        // 인가
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return new ResponseEntity<>("User signed in successfully!", HttpStatus.OK);
+        // get token from jwtTokenProvider
+        String token = jwtTokenProvider.generateToken(authentication);
+
+//        return new ResponseEntity<>("User signed in successfully!", HttpStatus.OK);
+        return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
 

@@ -17,10 +17,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
@@ -85,5 +83,9 @@ public class UserController {
         return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
-
+    // http://localhost:8080/users/oauth 을 입력을 해야 json으로 토큰을 볼 수 있어
+    @GetMapping("/oauth")
+    public OAuth2AuthenticationToken oauthToken(OAuth2AuthenticationToken token) {
+        return token;
+    }
 }

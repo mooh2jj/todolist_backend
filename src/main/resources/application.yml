@@ -49,6 +49,23 @@ spring:
           starttls:
             enable: true
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 326554605996-ujphf2on3dhf6iqsq8l9dkmfed4fmmqm.apps.googleusercontent.com
+            client-secret: 6W7DOAVaiHoabm-8wuLG6qPc
+            scope:
+              - email
+              - profile
+
+          facebook:
+            client-id: 532196661426439
+            client-secret: ba907d1d1d6ef00434fe58806a632825
+            scope:
+              - email
+              - public_profile
 
 logging:
   level:

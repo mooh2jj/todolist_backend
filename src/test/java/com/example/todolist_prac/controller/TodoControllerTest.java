@@ -1,12 +1,12 @@
 package com.example.todolist_prac.controller;
 
 import com.example.todolist_prac.controller.todo.TodoController;
+import com.example.todolist_prac.dto.todo.TodoRequest;
+import com.example.todolist_prac.dto.todo.TodoResponse;
 import com.example.todolist_prac.exception.ErrorCode;
 import com.example.todolist_prac.exception.ResourceNotFoundException;
 import com.example.todolist_prac.model.todo.TodoEntity;
-import com.example.todolist_prac.dto.todo.TodoRequest;
-import com.example.todolist_prac.dto.todo.TodoResponse;
-import com.example.todolist_prac.service.todo.TodoServiceImpl;
+import com.example.todolist_prac.service.todo.TodoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +36,7 @@ public class TodoControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private TodoServiceImpl todoService;
+    private TodoService todoService;
 
     @Autowired
     private ObjectMapper mapper;

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,11 +17,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-@DataJpaTest
+@SpringBootTest
 class TodoRepositoryTest {
 
     @Autowired
@@ -145,8 +146,17 @@ class TodoRepositoryTest {
     @DisplayName("정렬하기 테스트")
     @Test
     public void sortTest() {
-//        var todoEntities = todoRepository.findAll(Sort.by(Sort.Direction.DESC, "order"));
-//        todoEntities.forEach(System.out::println);
+
+        LongStream.rangeClosed(1,20).forEach(i -> {
+            TodoEntity todoEntity = TodoEntity.builder()
+                    .id(i)
+                    .title("todo_dsg" + i)
+                    .order(i)
+                    .completed(true)
+                    .build();
+            todoRepository.save(todoEntity);
+        });
+
         Sort sort = Sort.by("id").descending();
         Pageable pageable = PageRequest.of(0, 10, sort);
 

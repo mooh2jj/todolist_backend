@@ -34,6 +34,7 @@ class TodoRepositoryIntegrationTest {
     @BeforeEach
     public void setup() {
         todoEntity = TodoEntity.builder()
+                .id(1L)
                 .title("testTodo")
                 .order(0L)
                 .completed(false)
@@ -47,6 +48,7 @@ class TodoRepositoryIntegrationTest {
         // when - action or the behaviour that we are going test
         TodoEntity savedTodo = todoRepository.save(todoEntity);
 
+        log.info("savedTodo: {}", savedTodo);
         // then - verify the output
         assertThat(savedTodo).isNotNull();
         assertThat(savedTodo.getId()).isGreaterThan(0);
@@ -117,10 +119,12 @@ class TodoRepositoryIntegrationTest {
     public void deleteById(){
         // given - precondition or setup
         TodoEntity savedTodoEntity = todoRepository.save(this.todoEntity);
+        log.info("savedTodoEntity: {}", savedTodoEntity);
         // when - action or the behaviour that we are going test
-        todoRepository.deleteById(savedTodoEntity.getId());
+        todoRepository.delete(savedTodoEntity);
         Optional<TodoEntity> deletedTodo = todoRepository.findById(savedTodoEntity.getId());
 
+        log.info("deletedTodo: {}", deletedTodo);
         // then - verify the output
         assertThat(deletedTodo).isEmpty();
 
@@ -145,6 +149,7 @@ class TodoRepositoryIntegrationTest {
         Pageable pageable = PageRequest.of(0, 10, sort);
 
         Page<TodoEntity> result = todoRepository.findAll(pageable);
+        log.info("result: {}", result);
 
         result.get().forEach(System.out::println);
     }

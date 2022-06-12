@@ -19,7 +19,7 @@ public class FacebookUserInfo implements OAuth2UserInfo {
 
     @Override
     public String getProvider() {
-        return "facbook";
+        return "facebook";
     }
 
     @Override

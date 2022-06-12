@@ -30,6 +30,6 @@ public class GoogleUserInfo implements OAuth2UserInfo{
 
     @Override
     public String getName() {
-        return (String) attributes.get("sub");
+        return (String) attributes.get("name");
     }
 }

@@ -26,10 +26,8 @@ pipeline {
 
         stage('build gradle') {
             steps {
-
                 sh 'chmod +x gradlew'
                 sh  './gradlew clean build'
-
 
                 sh 'ls -al ./build'
             }
@@ -40,6 +38,17 @@ pipeline {
 
                 failure {
                     echo 'gradle build failed'
+                }
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                gradlew('test')
+            }
+            post {
+                always {
+                    junit '**/build/test-results/test/TEST-*.xml'
                 }
             }
         }

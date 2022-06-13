@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        gradle 'gradle'
+    }
+
     stages {
         stage('Prepare') {
 
@@ -43,13 +47,8 @@ pipeline {
         }
 
         stage('Unit Tests') {
-            steps {
-                gradlew('test')
-            }
-            post {
-                always {
-                    junit '**/build/test-results/test/TEST-*.xml'
-                }
+            steps{
+                junit '**/build/test-results/test/*.xml'
             }
         }
 

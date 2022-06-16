@@ -3,7 +3,7 @@ package com.example.todolist_prac.config.security;
 import com.example.todolist_prac.components.jwt.JwtAuthenticationEntryPoint;
 import com.example.todolist_prac.components.jwt.JwtAuthenticationFilter;
 import com.example.todolist_prac.service.user.OAuth2UserService;
-import com.example.todolist_prac.service.user.UserService;
+import com.example.todolist_prac.service.user.PrincipalDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
+    private final PrincipalDetailsService principalDetailsService;
     private final OAuth2UserService oAuth2UserService;
     private final JwtAuthenticationEntryPoint authenticationEntryPoint;
 
@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
+        auth.userDetailsService(principalDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 

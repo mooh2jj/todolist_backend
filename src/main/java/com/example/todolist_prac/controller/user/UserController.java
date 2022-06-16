@@ -83,6 +83,7 @@ public class UserController {
         return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
+    // http://localhost:8080/login으로 들어간다. oauth: facebook, google
     // http://localhost:8080/users/oauth 을 입력을 해야 json으로 토큰을 볼 수 있어
     @GetMapping("/oauth")
     public OAuth2AuthenticationToken oauthToken(OAuth2AuthenticationToken token) {

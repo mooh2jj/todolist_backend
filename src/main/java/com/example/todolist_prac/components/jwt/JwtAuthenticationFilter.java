@@ -1,6 +1,6 @@
 package com.example.todolist_prac.components.jwt;
 
-import com.example.todolist_prac.service.user.UserService;
+import com.example.todolist_prac.service.user.PrincipalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +20,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @Autowired
-    private UserService customUserDetailsService;
+    private PrincipalDetailsService principalDetailsService;
 
 
     @Override
@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // get username from token
             String username = jwtTokenProvider.getUsernameFromJWT(token);
             // load user associated with token
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = principalDetailsService.loadUserByUsername(username);
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities()

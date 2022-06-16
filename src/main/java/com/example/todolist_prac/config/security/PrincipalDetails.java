@@ -1,4 +1,4 @@
-package com.example.todolist_prac.dto.user;
+package com.example.todolist_prac.config.security;
 
 import com.example.todolist_prac.model.user.User;
 import lombok.Data;

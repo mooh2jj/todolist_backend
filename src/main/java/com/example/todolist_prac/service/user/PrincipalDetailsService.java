@@ -1,6 +1,6 @@
 package com.example.todolist_prac.service.user;
 
-import com.example.todolist_prac.dto.user.PrincipalDetails;
+import com.example.todolist_prac.config.security.PrincipalDetails;
 import com.example.todolist_prac.model.user.User;
 import com.example.todolist_prac.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class PrincipalDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     // UserController에 UserDetailsService를 구현한 Service 주입시

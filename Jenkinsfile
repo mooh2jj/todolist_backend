@@ -57,8 +57,9 @@ pipeline {
         stage('Deploy') {
             steps {
             // 기존 생긴 images 삭제를 위해 필요 처음시는 필요없음.
-//                 sh 'docker rm -f $(docker ps -a -q -f name=todo_backend)'
-//                 sh 'docker rmi -f mooh2jj/todo_backend'
+                sh 'docker stop $(docker ps -a -q -f name=todo_backend)'
+                sh 'docker rm -f $(docker ps -a -q -f name=todo_backend)'
+                sh 'docker rmi -f $(docker images -q -f dangling=true)'
                 sh 'docker run --name todo_backend -d -p 8090:8090 mooh2jj/todo_backend'
             }
 

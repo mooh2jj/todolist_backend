@@ -70,7 +70,7 @@ pipeline {
             steps {
                 sh 'echo "Docker Image Push Start"'
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', "Docker-Hub") {
+                    docker.withRegistry('https://registry.hub.docker.com/', "Docker-Hub") {
                         DOCKER_IMAGE.push("latest")
                     }
 

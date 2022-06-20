@@ -27,7 +27,7 @@ pipeline {
         stage('build gradle') {
             steps {
                 sh 'chmod +x gradlew'
-                sh  './gradlew clean build --exclude-task test'
+                sh  './gradlew clean build'
 
                 sh 'ls -al ./build'
             }

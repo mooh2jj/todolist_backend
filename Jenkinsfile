@@ -2,7 +2,8 @@ pipeline {
     agent any
 
 	environment {
-	    image = ''
+        DOCKER_IMAGE_NAME = 'mooh2jj/todo_backend'
+        DOCKER_IMAGE = ''
 	}
     stages {
         stage('Prepare') {
@@ -57,23 +58,40 @@ pipeline {
 //             }
 //         }
 
-	    stage('Build Docker Image') {
-	        steps {
-	            script {
-	                image = docker.build('mooh2jj/todo_backend')
-	            }
-	        }
-	    }
+        stage('Build Docker') {
+            steps {
+                sh 'echo " Image Build Start"'
+                script {
+                    DOCKER_IMAGE = docker.build DOCKER_IMAGE_NAME
+                }
+            }
 
-	    stage('Push Docker Image') {
-	        steps {
-	            script{
-	                docker.withRegistry('https://registry.hub.docker.com/', 'docker-hub') {
-	                    image.push('latest')
-	                }
-	            }
-	        }
-	    }
+            post {
+                failure {
+                    sh 'echo "Build Docker Fail"'
+                }
+              }
+        }
+
+        stage('Push Docker') {
+            steps {
+                sh 'echo "Docker Image Push Start"'
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', "Docker-Hub") {
+                        DOCKER_IMAGE.push("latest")
+                    }
+
+                }
+            }
+            post {
+                success {
+                    sh 'docker rmi $(docker images -q -f dangling=true)'
+                }
+                failure {
+                    error 'Docker Image Push Fail'
+                }
+            }
+        }
 
 //         stage('Deploy') {
 //             steps {

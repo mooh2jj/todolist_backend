@@ -1,10 +1,9 @@
 pipeline {
     agent any
 
-    tools {
-        gradle 'gradle'
-    }
-
+	environment {
+	    image = ''
+	}
     stages {
         stage('Prepare') {
 
@@ -52,30 +51,48 @@ pipeline {
             }
         }
 
-        stage('dockerizing'){
-            steps{
-                sh 'docker build . -t mooh2jj/todo_backend'
-            }
-        }
+//         stage('dockerizing'){
+//             steps{
+//                 sh 'docker build . -t mooh2jj/todo_backend'
+//             }
+//         }
 
-        stage('Deploy') {
-            steps {
-            // 기존 생긴 images 삭제를 위해 필요 처음시는 필요없음.
-                sh 'docker stop $(docker ps -a -q -f name=todo_backend)'
-                sh 'docker rm -f $(docker ps -a -q -f name=todo_backend)'
-                sh 'docker rmi -f mooh2jj/todo_backend'
-                sh 'docker run --name todo_backend -d -p 8090:8090 mooh2jj/todo_backend'
-            }
+	    stage('Build Docker Image') {
+	        steps {
+	            script {
+	                image = docker.build('mooh2jj/todo_backend')
+	            }
+	        }
+	    }
 
-            post {
-                success {
-                    echo 'success'
-                }
+	    stage('Push Docker Image') {
+	        steps {
+	            script{
+	                docker.withRegistry('https://registry.hub.docker.com/', 'docker-hub') {
+	                    image.push('latest')
+	                }
+	            }
+	        }
+	    }
 
-                failure {
-                    echo 'failed'
-                }
-            }
-        }
+//         stage('Deploy') {
+//             steps {
+//             // 기존 생긴 images 삭제를 위해 필요 처음시는 필요없음.
+//                 sh 'docker stop $(docker ps -a -q -f name=todo_backend)'
+//                 sh 'docker rm -f $(docker ps -a -q -f name=todo_backend)'
+//                 sh 'docker rmi -f mooh2jj/todo_backend'
+//                 sh 'docker run --name todo_backend -d -p 8090:8090 mooh2jj/todo_backend'
+//             }
+//
+//             post {
+//                 success {
+//                     echo 'success'
+//                 }
+//
+//                 failure {
+//                     echo 'failed'
+//                 }
+//             }
+//         }
     }
 }

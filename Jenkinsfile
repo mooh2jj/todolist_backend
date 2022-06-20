@@ -2,9 +2,9 @@ pipeline {
     agent any
 
 	environment {
-        DOCKER_IMAGE_NAME = 'mooh2jj/todo_backend'
-        DOCKER_IMAGE = ''
+	    image = ''
 	}
+
     stages {
         stage('Prepare') {
 
@@ -58,20 +58,13 @@ pipeline {
 //             }
 //         }
 
-        stage('Build Docker') {
-            steps {
-                sh 'echo " Image Build Start"'
-                script {
-                    DOCKER_IMAGE = docker.build DOCKER_IMAGE_NAME
-                }
-            }
-
-            post {
-                failure {
-                    sh 'echo "Build Docker Fail"'
-                }
-              }
-        }
+	    stage('Build Docker Image') {
+	        steps {
+	            script {
+	                image = docker.build('mooh2jj/todo_backend')
+	            }
+	        }
+	    }
 
         stage('Push Docker') {
             steps {

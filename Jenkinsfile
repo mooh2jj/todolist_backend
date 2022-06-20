@@ -86,6 +86,28 @@ pipeline {
             }
         }
 
+        	    stage('Deploy') {
+        	        steps([$class: 'BapSshPromotionPublisherPlugin']) {
+        	            sshPublisher(
+        	                continueOnError: false, failOnError: true,
+        	                publishers: [
+        	                    sshPublisherDesc(
+        	                        configName: "was-1",
+        	                        verbose: true,
+        	                        transfers: [
+        	                            sshTransfer(
+        	                                sourceFiles: "",
+        	                                removePrefix: "",
+        	                                remoteDirectory: "",
+        	                                execCommand: "sh ~/scripts/deploy-docker.sh"
+        	                            )
+        	                        ]
+        	                    )
+        	                ]
+        	            )
+        	        }
+        	    }
+
 //         stage('Deploy') {
 //             steps {
 //             // 기존 생긴 images 삭제를 위해 필요 처음시는 필요없음.

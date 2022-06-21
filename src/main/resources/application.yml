@@ -5,9 +5,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql-rdb.cwhetp4kpcdx.ap-northeast-2.rds.amazonaws.com:3306/todolist?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://13.125.220.82:3306/todolist?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: admin
-    password: doseong9114!!
+    password: doseong9114
 
 
   jpa:

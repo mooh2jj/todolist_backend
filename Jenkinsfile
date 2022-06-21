@@ -86,6 +86,13 @@ pipeline {
 //             }
         }
 
+        stage('Remove Docker Image') {
+            steps {
+                sh 'docker rmi mooh2jj/todo_backend'
+                sh 'docker rmi registry.hub.docker.com/mooh2jj/todo_backend:latest'
+            }
+        }
+
         stage('Deploy') {
             steps([$class: 'BapSshPromotionPublisherPlugin']) {
                 sshPublisher(

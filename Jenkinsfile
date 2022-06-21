@@ -86,27 +86,27 @@ pipeline {
 //             }
         }
 
-//         stage('Deploy') {
-//             steps([$class: 'BapSshPromotionPublisherPlugin']) {
-//                 sshPublisher(
-//                     continueOnError: false, failOnError: true,
-//                     publishers: [
-//                         sshPublisherDesc(
-//                             configName: "$SSH_CONFIG_NAME",
-//                             verbose: true,
-//                             transfers: [
-//                                 sshTransfer(
-//                                     sourceFiles: "",
-//                                     removePrefix: "",
-//                                     remoteDirectory: "",
-//                                     execCommand: "sh ~/scripts/deploy-docker.sh"
-//                                 )
-//                             ]
-//                         )
-//                     ]
-//                 )
-//             }
-//         }
+        stage('Deploy') {
+            steps([$class: 'BapSshPromotionPublisherPlugin']) {
+                sshPublisher(
+                    continueOnError: false, failOnError: true,
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: "$SSH_CONFIG_NAME",
+                            verbose: true,
+                            transfers: [
+                                sshTransfer(
+                                    sourceFiles: "",
+                                    removePrefix: "",
+                                    remoteDirectory: "",
+                                    execCommand: "sh /home/scripts/deploy-docker.sh"
+                                )
+                            ]
+                        )
+                    ]
+                )
+            }
+        }
 
 //         stage('Deploy') {
 //             steps {

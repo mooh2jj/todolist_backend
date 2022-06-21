@@ -76,14 +76,14 @@ pipeline {
 
                 }
             }
-//             post {
-//                 success {
-//                     sh 'docker rmi $(docker images -q -f dangling=true)'
-//                 }
-//                 failure {
-//                     error 'Docker Image Push Fail'
-//                 }
-//             }
+            post {
+                success {
+                    sh 'docker rmi $(docker images -q -f dangling=true)'
+                }
+                failure {
+                    error 'Docker Image Push Fail'
+                }
+            }
         }
 
         stage('Deploy') {

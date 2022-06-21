@@ -92,7 +92,7 @@ pipeline {
         	                continueOnError: false, failOnError: true,
         	                publishers: [
         	                    sshPublisherDesc(
-        	                        configName: "was-1",
+        	                        configName: "jenkins-docker-ssh-instance",
         	                        verbose: true,
         	                        transfers: [
         	                            sshTransfer(

@@ -33,6 +33,7 @@ pipeline {
             sh 'gradle test'
             echo 'test success'
           }
+        }
 
         stage('build gradle') {
             steps {

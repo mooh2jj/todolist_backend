@@ -28,10 +28,16 @@ pipeline {
             }
         }
 
+        stage('Test') {
+          steps {
+            sh 'gradle test'
+            echo 'test success'
+          }
+
         stage('build gradle') {
             steps {
                 sh 'chmod +x gradlew'
-                sh  './gradlew clean build'
+                sh  './gradlew clean build --exclude-task test'
 
                 sh 'ls -al ./build'
             }
@@ -46,11 +52,11 @@ pipeline {
             }
         }
 
-        stage('Unit & Integration Tests') {
-            steps{
-                junit '**/build/test-results/test/*.xml'
-            }
-        }
+//         stage('Unit & Integration Tests') {
+//             steps{
+//                 junit '**/build/test-results/test/*.xml'
+//             }
+//         }
 
 //         stage('dockerizing'){
 //             steps{

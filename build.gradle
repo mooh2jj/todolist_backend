@@ -45,6 +45,11 @@ jar {
     enabled = false
 }
 
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
 test {
     useJUnitPlatform()
+    outputs.dir snippetsDir
 }

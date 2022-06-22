@@ -29,19 +29,18 @@ pipeline {
         }
 
         stage('Test') {
-          steps {
-            sh 'chmod +x gradlew'
-            sh './gradlew test'
-            echo 'test success'
-          }
+            steps {
+                sh 'chmod +x gradlew'
+                sh './gradlew test'
+                echo 'test success'
+            }
         }
 
         stage('build gradle') {
             steps {
-                sh 'chmod +x gradlew'
+//                 sh 'chmod +x gradlew'
                 sh  './gradlew clean build --exclude-task test'
-
-                sh 'ls -al ./build'
+//                 sh 'ls -al ./build'
             }
             post {
                 success {

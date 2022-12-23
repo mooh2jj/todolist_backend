@@ -65,7 +65,7 @@ public class TodoServiceImpl implements TodoService{
 
     @Override
     public List<TodoResponse> searchAll() {
-        var all = todoRepository.findAll();
+        var all = todoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 
         return all.stream()
                 .map(TodoEntity -> mapToDto(TodoEntity))

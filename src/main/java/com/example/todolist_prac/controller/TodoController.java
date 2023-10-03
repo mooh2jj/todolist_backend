@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -23,7 +24,9 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping
-    public ResponseEntity<TodoResponse> create(@RequestBody TodoRequest request) {
+    public ResponseEntity<TodoResponse> create(
+            @Valid @RequestBody TodoRequest request
+    ) {
         log.info("Create");
 
         if (ObjectUtils.isEmpty(request.getTitle())) {
@@ -39,7 +42,6 @@ public class TodoController {
         }
 
         TodoResponse todoResponse = todoService.add(request);
-
         return new ResponseEntity<>(todoResponse, HttpStatus.CREATED);
     }
 

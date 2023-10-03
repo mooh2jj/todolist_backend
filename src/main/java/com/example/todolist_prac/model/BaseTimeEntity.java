@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
@@ -15,8 +16,10 @@ import java.time.LocalDateTime;
 public abstract class BaseTimeEntity { //추상화 클래스로 만들고 Posts 클래스가 상속받도록 한다.
 
     @CreatedDate
+    @Column(updatable = false, name = "created_at")
     private LocalDateTime createdDate;
 
     @LastModifiedDate
+    @Column(name = "modified_at")
     private LocalDateTime modifiedDate;
 }

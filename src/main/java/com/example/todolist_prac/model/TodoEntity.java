@@ -21,7 +21,7 @@ public class TodoEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String title;
 
-    @Column(name = "todoOrder", nullable = false)
+    @Column(name = "todo_order", nullable = false)
     private Long order;
 
     @Column(nullable = false)

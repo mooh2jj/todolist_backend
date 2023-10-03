@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/todo")

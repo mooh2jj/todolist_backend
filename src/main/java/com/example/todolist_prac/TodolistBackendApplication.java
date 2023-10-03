@@ -2,14 +2,13 @@ package com.example.todolist_prac;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@EnableJpaAuditing
+
 @SpringBootApplication
-public class TodolistPracApplication {
+public class TodolistBackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TodolistPracApplication.class, args);
+        SpringApplication.run(TodolistBackendApplication.class, args);
     }
 
 }

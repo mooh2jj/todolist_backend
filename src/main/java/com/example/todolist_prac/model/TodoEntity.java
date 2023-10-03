@@ -1,15 +1,13 @@
 package com.example.todolist_prac.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,7 +21,7 @@ public class TodoEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String title;
 
-    @Column(name = "todoOrder", nullable = false)
+    @Column(name = "todo_order", nullable = false)
     private Long order;
 
     @Column(nullable = false)

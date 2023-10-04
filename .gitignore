@@ -40,5 +40,5 @@ out/
 .env
 
 ### properties ###
-**/applicaitono-dev.yml
-**/applicaitono-prod.yml
+**/application-dev.yml
+**/application-prod.yml

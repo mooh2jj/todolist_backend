@@ -12,14 +12,7 @@ public class WebConfig implements WebMvcConfigurer{
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/**")
-                .allowedOrigins(
-                        "http://localhost:3000",
-                        "https://todolist.dosee.site"
-                )
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD")
-                .allowedHeaders("*")       // 모든 헤더를 허용
-                .exposedHeaders("Authorization", "Set-Cookie")
-                .allowCredentials(true)    // 인증정보를 응답 헤더에 포함할지 여부
-                .maxAge(3000);             // 3000초 동안 pre-flight 리퀘스트를 캐싱
+                .allowedOriginPatterns("*") // 모든 요청을 허용
+                .allowedMethods("*");       // 모든 메소드를 허용
     }
 }

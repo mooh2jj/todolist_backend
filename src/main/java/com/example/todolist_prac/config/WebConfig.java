@@ -13,6 +13,7 @@ public class WebConfig implements WebMvcConfigurer{
         registry
                 .addMapping("/**")
                 .allowedOriginPatterns("*") // 모든 요청을 허용
+                .allowedHeaders("*")        // 모든 헤더를 허용
                 .allowedMethods("*");       // 모든 메소드를 허용
     }
 }
